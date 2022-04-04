@@ -13,7 +13,7 @@ class Orders
 
     protected function showDishes()
     {
-        $sql = 'SELECT nombre, cantidad_plato, precio FROM plato';
+        $sql = 'SELECT idPlato, nombre, cantidad_plato, precio FROM plato';
         $show = $this->db->conect->prepare($sql);
         $show->execute();
         $dishes = $show->fetchAll(PDO::FETCH_OBJ);
@@ -22,7 +22,7 @@ class Orders
 
     protected function showDrinks()
     {
-        $sql = 'SELECT nombre_bebida, tipo_botella, cantidad, tamano, precio_unidad FROM bebidas';
+        $sql = 'SELECT idBebidas, nombre_bebida, tipo_botella, cantidad, tamano, precio_unidad FROM bebidas';
         $show = $this->db->conect->prepare($sql);
         $show->execute();
         $drink = $show->fetchAll(PDO::FETCH_OBJ);

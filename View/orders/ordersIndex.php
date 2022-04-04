@@ -132,6 +132,7 @@ include '../Inc/header.php';
 function addProductsTableDish()
 {
     counter = counter + 1;
+    rowDishId = 'rowDish' + counter;
     let quantity = $('#quantity').val();
     let dish = $('#dish').val();
     let dishName = $('#dish option:selected').text();
@@ -139,18 +140,19 @@ function addProductsTableDish()
     let total = dates[1] * quantity;
 
     $('#descriptionTable').append("\
-    <tr id='rowDish " + counter +"'>\
-        <td><input type='hidden' name='dish[]' value='" + dish + "'>"+ dates[0] +"</td>\
-        <td><input type='hidden' name='quantity[]' value='" + quantity + "' >" + quantity + "</td>\
+    <tr id='" + rowDishId +"'>\
+        <td><input type='hidden' name='dish[]' value='" + dish + "||" + total + "||" + quantity + "'>"+ dates[0] +"</td>\
+        <td>" + quantity + "</td>\
         <td>" + dates[1] + "</td>\
-        <td><input type='hidden' name='totalDish' value='" + total + "'>" + total + "</td>\
-        <td><button type='button' onclick='dishDelete(" + counter + ")'>eliminar</button></td>\
+        <td>" + total + "</td>\
+        <td><button type='button' onclick='rowDelete(" + rowDishId + ")'>eliminar</button></td>\
     </tr>")
 }
 
 function addProductsTableDrink()
 {
     counterDrink = counterDrink + 1;
+    rowDrinkId = 'rowDrink' + counterDrink;
     let quantityDrink = $('#quantityDrink').val();
     let drink = $('#drinks').val();
     let drinkName = $('#drinks option:selected').text();
@@ -159,23 +161,17 @@ function addProductsTableDrink()
     console.log(drinkName);
 
     $('#descriptionTableDrink').append("\
-    <tr id='rowDrink " + counter + "'>\
+    <tr id='" + rowDrinkId + "'>\
         <td><input type='hidden' name='drink[]' value='" + drink + "'>" + datesDrink[0] + "</td>\
         <td><input type='hidden' name='quantityDrink[]' value='" + quantityDrink +"'> " + quantityDrink + " </td>\
         <td>" + datesDrink[1] + "</td>\
         <td><input type='hidden' name='totalDrink' value='" + total + "'>" + total +"</td>\
-        <td><button type='button' onclick='drinkDelete(" + counterDrink + ")'>Eliminar</button></td>\
+        <td><button type='button' onclick='rowDelete(" + rowDrinkId + ")'>Eliminar</button></td>\
     </tr>")
 }
 
-function dishDelete(id)
-{
-    $('#' + id).remove();
-}
-
-function drinkDelete(id)
-{
-    $('#' + id).remove();
+function rowDelete(id) {
+    id.remove();
 }
 </script>
 

@@ -19,9 +19,9 @@ CREATE SCHEMA IF NOT EXISTS `restaurante` DEFAULT CHARACTER SET utf8 ;
 USE `restaurante` ;
 
 -- -----------------------------------------------------
--- Table `restaurante`.`Plato`
+-- Table `restaurante`.`plato`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restaurante`.`Plato` (
+CREATE TABLE IF NOT EXISTS `restaurante`.`plato` (
   `idPlato` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(80) NOT NULL,
   `cantidad_plato` INT(100) NOT NULL,
@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `restaurante`.`Bebidas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restaurante`.`Bebidas` (
+CREATE TABLE IF NOT EXISTS `restaurante`.`bebidas` (
   `idBebidas` INT NOT NULL AUTO_INCREMENT,
   `nombre_bebida` VARCHAR(45) NOT NULL,
   `tipo_botella` VARCHAR(45) NOT NULL,
@@ -49,23 +49,39 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `restaurante`.`Pedido`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restaurante`.`Pedido` (
+CREATE TABLE IF NOT EXISTS `restaurante`.`pedido` (
   `idPedido` INT NOT NULL AUTO_INCREMENT,
   `fecha_pedido` DATE NOT NULL,
   `precio_total` INT NOT NULL,
-  `Plato_idPlato` INT NOT NULL,
-  `Bebidas_idBebidas` INT NOT NULL,
-  PRIMARY KEY (`idPedido`),
-  INDEX `fk_Pedido_Plato1_idx` (`Plato_idPlato` ASC) ,
-  INDEX `fk_Pedido_Bebidas1_idx` (`Bebidas_idBebidas` ASC) ,
+  PRIMARY KEY (`idPedido`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `restaurante`.`Pedido Detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `restaurante`.`pedido_detalle` (
+  `idPedidoDetalle` INT NOT NULL AUTO_INCREMENT,
+  `pedido_id` INT NULL,
+  `plato_id` INT NULL,
+  `bebidas_id` INT NULL,
+  `cantidad` INT NOT NULL,
+  PRIMARY KEY (`idPedidoDetalle`),
+  INDEX `fk_PedidoDetalle_Pedido_idx` (`pedido_id` ASC) ,
+  INDEX `fk_PedidoDetalle_Plato1_idx` (`plato_id` ASC) ,
+  INDEX `fk_PedidoDetalle_Bebidas1_idx` (`bebidas_id` ASC) ,
+  CONSTRAINT `fk_PedidoDetalle_Pedido`
+    FOREIGN KEY (`Pedido_idPedido`)
+    REFERENCES `restaurante`.`pedido` (`idPedido`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedido_Plato1`
     FOREIGN KEY (`Plato_idPlato`)
-    REFERENCES `restaurante`.`Plato` (`idPlato`)
+    REFERENCES `restaurante`.`plato` (`idPlato`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedido_Bebidas1`
     FOREIGN KEY (`Bebidas_idBebidas`)
-    REFERENCES `restaurante`.`Bebidas` (`idBebidas`)
+    REFERENCES `restaurante`.`bebidas` (`idBebidas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -74,7 +90,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `restaurante`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `restaurante`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `restaurante`.`usuario` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT,
   `nombre_completo` VARCHAR(100) NOT NULL,
   `nombre_usuario` VARCHAR(100) NOT NULL,
