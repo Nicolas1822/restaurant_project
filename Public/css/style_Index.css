@@ -1,0 +1,17 @@
+
+body {
+    background-image: url(../image/background-image.png);
+    background-size: cover;
+    background-repeat: no repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.text {
+    margin-top:15%;
+    text-shadow: 2px 2px 2px black;
+}
+
+.sub_text {
+    text-shadow: 2px 2px 2px black;
+}
